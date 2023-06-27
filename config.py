@@ -16,7 +16,6 @@ class Settings():
     """
     NOTION_TOKEN: str = os.getenv('NOTION_TOKEN')
     DATABASE_ID: str = os.getenv('DATABASE_ID')
-    HOST: str = os.getenv('HOST')
 
 
 settings = Settings()

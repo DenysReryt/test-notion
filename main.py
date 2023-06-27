@@ -5,7 +5,6 @@ import subprocess
 import logging
 from logging import FileHandler
 from flask import Flask
-from config import settings
 
 app = Flask(__name__)
 
@@ -34,4 +33,4 @@ def run_script():
 
 
 if __name__ == '__main__':
-    app.run(host=settings.HOST, port=8000)
+    app.run(host='localhost', port=8000)
