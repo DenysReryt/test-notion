@@ -94,44 +94,45 @@ for i in read_db(db_id=database_id, headrs=headers)['results']:
 # pprint(todo_status)
 
 for i in properties_done:
-    set_date = i['properties']['Set date']['date']['start']
-    due_date = i['properties']['Due Date']['date']['start']
-    today = datetime.now().strftime('%Y-%m-%d')
-    page_id = i['id']
+    if i['properties']['Set date']['date'] is not None:
+        set_date = i['properties']['Set date']['date']['start']
+        due_date = i['properties']['Due Date']['date']['start']
+        today = datetime.now().strftime('%Y-%m-%d')
+        page_id = i['id']
 
-    if set_date > today:
-        continue
+        if set_date > today:
+            continue
 
-    if set_date < today:
-        periodicity = i['properties']['Periodicity']['multi_select']
-        next_due_date = None
-        for period in periodicity:
-            if period['name'].find('/') != -1 or period['name'] == 'Daily':
-                period_name = period['name']
-                next_due_date, next_set_date = calculate_next_due_date(
-                    due_date, period_name)
-                new_properties = {
-                    "Set date": {
-                        "date": {
-                            "start": next_set_date.strftime('%Y-%m-%d')
-                        }
-                    },
-                    "Due Date": {
-                        "date": {
-                            "start": next_due_date.strftime('%Y-%m-%d')
+        if set_date < today:
+            periodicity = i['properties']['Periodicity']['multi_select']
+            next_due_date = None
+            for period in periodicity:
+                if period['name'].find('/') != -1 or period['name'] == 'Daily':
+                    period_name = period['name']
+                    next_due_date, next_set_date = calculate_next_due_date(
+                        due_date, period_name)
+                    new_properties = {
+                        "Set date": {
+                            "date": {
+                                "start": next_set_date.strftime('%Y-%m-%d')
+                            }
+                        },
+                        "Due Date": {
+                            "date": {
+                                "start": next_due_date.strftime('%Y-%m-%d')
+                            }
                         }
                     }
-                }
-                update_page(headrs=headers, page_id=page_id,
-                            properties=new_properties)
-    elif set_date == today:
-        new_properties = {
-            "Status": {'id': 'eA%40u',
-                       'select': {
-                           'color': 'blue',
-                           'id': '1', 
-                           'name': 'TO DO'
-                           },
-                       'type': 'select'}
-        }
-        update_page(page_id=page_id, headrs=headers, properties=new_properties)
+                    update_page(headrs=headers, page_id=page_id,
+                                properties=new_properties)
+        elif set_date == today:
+            new_properties = {
+                "Status": {'id': 'eA%40u',
+                        'select': {
+                            'color': 'blue',
+                            'id': '1', 
+                            'name': 'TO DO'
+                            },
+                        'type': 'select'}
+            }
+            update_page(page_id=page_id, headrs=headers, properties=new_properties)
