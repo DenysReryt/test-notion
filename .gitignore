@@ -1,6 +1,9 @@
 # Byte-compiled
 __pycache__
 
+# Unit test
+.pytest_cache
+
 # Environments
 venv/
 .env
