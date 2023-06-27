@@ -94,7 +94,7 @@ for i in read_db(db_id=database_id, headrs=headers)['results']:
 # pprint(todo_status)
 
 for i in properties_done:
-    if i['properties']['Set date']['date'] is not None:
+    if i['properties']['Set date']['date'] is not None and i['properties']['Due Date']['date'] is not None:
         set_date = i['properties']['Set date']['date']['start']
         due_date = i['properties']['Due Date']['date']['start']
         today = datetime.now().strftime('%Y-%m-%d')
@@ -128,11 +128,12 @@ for i in properties_done:
         elif set_date == today:
             new_properties = {
                 "Status": {'id': 'eA%40u',
-                        'select': {
-                            'color': 'blue',
-                            'id': '1', 
-                            'name': 'TO DO'
-                            },
-                        'type': 'select'}
+                           'select': {
+                               'color': 'blue',
+                               'id': '1',
+                               'name': 'TO DO'
+                           },
+                           'type': 'select'}
             }
-            update_page(page_id=page_id, headrs=headers, properties=new_properties)
+            update_page(page_id=page_id, headrs=headers,
+                        properties=new_properties)
