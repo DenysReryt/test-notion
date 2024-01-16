@@ -6,7 +6,7 @@ This project implements task scheduling in Notion based on specified dates and p
 First of all, you need to clone the project from Github locally to your computer:
 
 ```commandline
-git clone https://github.com/DenysReryt/etcetera-agency-test-assignment.git
+git clone https://github.com/DenysReryt/test-notion.git
 ```
 
 Before starting, create .env file and configurated environment variables like in .env.example
